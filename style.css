@@ -479,15 +479,17 @@ button:hover span {
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: opacity 0.4s ease, backdrop-filter 0.4s ease;
+    transition: opacity 0.4s ease, backdrop-filter 0.4s ease, background 0.4s ease;
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
+    cursor: pointer;
 }
 
 .card:hover .card-overlay {
     opacity: 1;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 229, 255, 0.25);
 }
 
 .view-text {
@@ -498,6 +500,19 @@ button:hover span {
     letter-spacing: 1px;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 229, 255, 0.4);
     animation: glow-pulse 2s ease-in-out infinite;
+    padding: 12px 24px;
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    background: rgba(0, 229, 255, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.card-overlay:hover .view-text {
+    background: rgba(0, 229, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.6), inset 0 0 20px rgba(0, 229, 255, 0.2);
+    transform: scale(1.1);
 }
 
 @keyframes glow-pulse {
@@ -576,12 +591,6 @@ footer {
 
 /* Responsive */
 @media (max-width: 600px) {
-    .gallery-container {
-        grid-template-columns: 1fr;
-    }
-}
-    }
-
     .navbar {
         padding: 15px 6%;
     }
@@ -655,6 +664,117 @@ footer {
 
     .card img {
         height: 250px;
+    }
+}
+
+/* Social Icons Wrapper with 3D Glitch Effect */
+.social-wrapper {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px 20px;
+    flex-wrap: wrap;
+}
+
+.icon {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border: 2px solid #00f2ea;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 28px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+}
+
+/* Brand name label on hover */
+.icon::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: -35px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    color: white;
+    white-space: nowrap;
+}
+
+/* Hover Effects with 3D Glitch */
+.icon:hover {
+    transform: translateY(-5px) scale(1.15);
+    box-shadow: 0 0 20px #00f2ea, 0 0 40px #ff0050;
+}
+
+.icon:hover::after {
+    opacity: 1;
+    text-shadow: 2px 0 #ff0050, -2px 0 #00f2ea;
+    animation: glitch-shimmer 0.3s infinite;
+}
+
+@keyframes glitch-shimmer {
+    0%, 100% {
+        text-shadow: 2px 0 #ff0050, -2px 0 #00f2ea;
+    }
+    50% {
+        text-shadow: -2px 0 #ff0050, 2px 0 #00f2ea;
+    }
+}
+
+/* Specific Brand Colors on Hover */
+.facebook:hover {
+    color: #1877F2;
+    border-color: #1877F2;
+    box-shadow: 0 0 20px #1877F2, 0 0 40px rgba(24, 119, 242, 0.4);
+}
+
+.linkedin:hover {
+    color: #0077b5;
+    border-color: #0077b5;
+    box-shadow: 0 0 20px #0077b5, 0 0 40px rgba(0, 119, 181, 0.4);
+}
+
+.whatsapp:hover {
+    color: #25D366;
+    border-color: #25D366;
+    box-shadow: 0 0 20px #25D366, 0 0 40px rgba(37, 211, 102, 0.4);
+}
+
+.tiktok:hover {
+    color: #00f2ea;
+    border-color: #ff0050;
+    box-shadow: 0 0 20px #ff0050, 0 0 40px rgba(255, 0, 80, 0.4);
+}
+
+.email:hover {
+    color: #EA4335;
+    border-color: #EA4335;
+    box-shadow: 0 0 20px #EA4335, 0 0 40px rgba(234, 67, 53, 0.4);
+}
+
+/* Responsive Social Icons */
+@media (max-width: 600px) {
+    .social-wrapper {
+        padding: 40px 20px;
+        gap: 20px;
+    }
+
+    .icon {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+
+    .icon::after {
+        bottom: -32px;
+        font-size: 11px;
     }
 }
 

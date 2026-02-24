@@ -5,11 +5,11 @@ function typeEffect() {
     if (index < text.length) {
         document.querySelector(".hero h1 span").innerHTML += text.charAt(index);
         index++;
-        setTimeout(typeEffect, 150); // ٹائپنگ کی رفتار
+        setTimeout(typeEffect, 150); // Typing speed
     }
 }
 
-// پہلے HTML سے نام مٹا دیں تاکہ یہ خود ٹائپ ہو
+// First erase the name from HTML so it types by itself
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".hero h1 span").innerHTML = "";
     typeEffect();
@@ -194,23 +194,48 @@ function initTestimonialsSlider() {
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const closeBtn = document.querySelector('.close-btn');
-const cardImages = document.querySelectorAll('.card img');
 
-cardImages.forEach(img => {
-    img.addEventListener('click', () => {
-        lightbox.classList.add('active');
-        lightboxImg.src = img.src;
+// Open lightbox on card overlay (VIEW IMAGE button) click
+const cardOverlays = document.querySelectorAll('.card-overlay');
+cardOverlays.forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = overlay.closest('.card');
+        const img = card.querySelector('img');
+        if (img) {
+            lightbox.classList.add('active');
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+        }
     });
 });
 
-// Close lightbox
+// Also allow clicking directly on card images
+const cardImages = document.querySelectorAll('.card img');
+cardImages.forEach(img => {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => {
+        lightbox.classList.add('active');
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+    });
+});
+
+// Close lightbox on close button click
 closeBtn.addEventListener('click', () => {
     lightbox.classList.remove('active');
 });
 
-// Close when clicking outside the image
+// Close lightbox when clicking outside the image
 lightbox.addEventListener('click', (e) => {
-    if (e.target !== lightboxImg) {
+    if (e.target !== lightboxImg && e.target !== closeBtn) {
+        lightbox.classList.remove('active');
+    }
+});
+
+// Close lightbox with Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
         lightbox.classList.remove('active');
     }
 });
